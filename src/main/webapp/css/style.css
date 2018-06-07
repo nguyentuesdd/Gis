@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: small;
+	background: #fff;
+}
+
+#map {
+	width: 50%;
+	height: 500px;
+	border: 1px solid #000;
+}
