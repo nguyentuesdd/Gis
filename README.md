@@ -1,6 +1,6 @@
 # Gis
 Trước khi chạy web thì tạo database bằng postgresql trước, tên database là finaltest.
-Sau đó chạy file finaltest.sql để khởi tạo dữ liệu
+Sau đó chạy file finaltest.sql để khởi tạo dữ liệu.
 Rồi chạy trang importdata.jsp để lấy dữ liệu từ file excel đã thu thập
 
 CÁC CHỨC NĂNG CỦA WEB
