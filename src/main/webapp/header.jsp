@@ -21,7 +21,7 @@
 		</div>
 		<ul class="nav navbar-nav">
 			<li class="page1"><a href="<%=request.getContextPath()%>/index.jsp">Trang chủ</a></li>
-			<li class="page2"><a href="#">Chức năng 2</a></li>
+			<li class="page2"><a href="<%=request.getContextPath()%>/feature-2.jsp">Chức năng 2</a></li>
 			<li class="page3"><a href="#">Chức năng 3</a></li>
 			<li class="page4"><a href="#">Chức năng 4</a></li>
 			<li class="page5"><a href="#">Chức năng 5</a></li>
