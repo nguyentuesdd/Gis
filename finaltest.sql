@@ -10,6 +10,7 @@ CREATE DATABASE finaltest
 */
 
 -- Tạo bảng chứa thông tin các trường đại học
+alter table sectors drop constraint sectors_sid_fkey;
 drop table if exists universitys;
 create table universitys 
 (
