@@ -10,7 +10,7 @@
 <!-- google map api -->
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ZVhmqBT0By8htwjdjn22PIBzFJ1YThc&callback=myMap"></script>
-<script type="text/javascript" src="js/feature2.js"></script>
+
 <style>
 #map {
 	height: 500px;
@@ -65,16 +65,29 @@
 		</div>
 	</center>
 	<script>
+		
         $(document).ready(function () {
-            var mapDiv = $("#map")[0];
-            var latlng = new google.maps.LatLng(10.771971, 106.697845);
-            var options = {
-                center: latlng,
-                zoom: 11,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(mapDiv, options);
+            
+            $.ajax({
+            	url: "http://www.geoplugin.net/json.gp?ip=171.240.135.62",
+            	dataType: "json",
+            	type: "get",
+            	success: function(position){
+            		window.position = position;
+            		var mapDiv = $("#map")[0];
+            		var latlng = new google.maps.LatLng(position.geoplugin_latitude, position.geoplugin_longitude);
+            		var options = {
+                            center: latlng,
+                            zoom: 15,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                   var map = new google.maps.Map(mapDiv, options);
+            	}
+            });
+            
+            
         });
+        
         function handler() {
             var bm = $("#input").val();
     		var radius = $("#rangevalue").val();
@@ -94,13 +107,12 @@
           		alert("Chỉ có thể nhập số.")
           	};
         };
-        
         function responseHandler(data){
         	if(jQuery.isEmptyObject(data.jsonArray)){
         		alert("Không tìm thấy trường nào.");
         	} else{
         		var mapDiv = $("#map")[0];
-                var latlng = new google.maps.LatLng(10.771971, 106.697845);
+                var latlng = new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude);
                 var options = {
                     center: latlng,
                     zoom: 11,
@@ -111,7 +123,7 @@
         		$("#result").removeClass("hide");
         		$("#result").html("");
             	$.each(data.jsonArray, function(index) {
-            		if(distanceFrom2Points(10.771971,106.697845,data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){
+            		if(distanceFrom2Points(window.position.geoplugin_latitude,window.position.geoplugin_longitude,data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){
             			
             		$("#result").append('<li class=\"list-group-item\"><div class=\"panel-group\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" href=\"#collapse'+index+'\">'+data.jsonArray[index].sname+'</a></h4></div><div id=\"collapse'+index+'\" class=\"panel-collapse collapse\"><div class=\"panel-body\"><p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p><p><b>Địa chỉ:</b> <a id=\"loc'+index+'\" href="#">'+data.jsonArray[index].saddress+'</a></p><p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p><p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p><p><b>Website: <a href=\"http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p></div></div></div></div></li>');
             		var maker = new google.maps.Marker({
@@ -165,6 +177,5 @@
         	return d;
         }
 </script>
-
 </body>
 </html>
