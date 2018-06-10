@@ -10,6 +10,7 @@
 <!-- google map api -->
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ZVhmqBT0By8htwjdjn22PIBzFJ1YThc&callback=myMap"></script>
+	<script type="text/javascript" src="js/feature2.js"></script>
 <style>
 #map {
 	height: 500px;
@@ -51,9 +52,6 @@
 					<button onclick="handler()" type="submit" id="btn"
 						class="btn btn-default my-2 my-sm-0">Tìm kiếm</button>
 				</div>
-
-
-
 				<h4 class="title">Chọn bán kính muốn xem (km)</h4>
 				<div class="row">
 					<input class="col-sm-3 custom-range" type="range" max="20"
@@ -61,18 +59,12 @@
 						class="col-sm-3" id="rangevalue" value="5"
 						onchange="slider.value=value" type="number" max="20" min="0" />
 				</div>
-				<%
-					
-				%>
-				<ul id="result" class="hide list-group">
-
-				</ul>
-
+				<ul id="result" class="hide list-group"></ul>
 			</div>
 			<div class="col-9" id="map"></div>
 		</div>
 	</center>
-	<script>
+<script>
         $(document).ready(function () {
             var mapDiv = $("#map")[0];
             var latlng = new google.maps.LatLng(10.771971, 106.697845);
@@ -82,27 +74,6 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(mapDiv, options);
-            <%-- <%for (University u : UniversityDAO.getAllUniversities()) {%>
-            var marker<%=u.getId()%> = new google.maps.Marker({
-                position: new google.maps.LatLng(<%=u.getLat()%>, <%=u.getLng()%>),
-                title: '<%=u.getSname()%>'
-            });
-            marker<%=u.getId()%>.setMap(map);
-            google.maps.event.addListener(marker<%=u.getId()%>, 'click', function () {
-                var infowindow = new google.maps.InfoWindow({
-                    content: '<div id="info">' +
-                    '<h5><%=u.getSname()%></h5>' +
-                    '<p><b>Mã trường:</b> <%=u.getSid()%></p>' +
-                    '<p><b>Địa chỉ:</b> <%=u.getSaddress()%></p>' +
-                    '<p><b>Điểm sàn:</b> <%=u.getBenchmark()%></p>' +
-                    '<p><b>Chỉ tiêu tuyển sinh:</b> <%=u.getQuota()%></p>' +
-                    '<p><b>Website: <a href="http://<%=u.getWebsite()%>"><%=u.getWebsite()%></a></p>' +
-                    '</div>'
-                });
-
-                infowindow.open(map, marker<%=u.getId()%>);
-            });
-            <%}%> --%>
         });
         function handler() {
             var bm = $("#input").val();
@@ -139,25 +110,29 @@
         		$("#result").removeClass("hide");
         		$("#result").html("");
             	$.each(data.jsonArray, function(index) {
-            		$("#result").append('<li class=\"list-group-item\"><h5>'+data.jsonArray[index].sname+'</h5><p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p><p><b>Địa chỉ:</b> '+data.jsonArray[index].saddress+'</p><p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p><p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p><p><b>Website: <a href=\"http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p></li>');
+            		$("#result").append('<li class=\"list-group-item\"><div class=\"panel-group\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" href=\"#collapse'+index+'\">'+data.jsonArray[index].sname+'</a></h4></div><div id=\"collapse'+index+'\" class=\"panel-collapse collapse\"><div class=\"panel-body\"><p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p><p><b>Địa chỉ:</b> <a id=\"loc'+index+'\" href="#">'+data.jsonArray[index].saddress+'</a></p><p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p><p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p><p><b>Website: <a href=\"http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p></div></div></div></div></li>');
             		var maker = new google.maps.Marker({
                 		position: new google.maps.LatLng(data.jsonArray[index].lat, data.jsonArray[index].lng),
                 		map: map,
                 		title: data.jsonArray[index].sname
             		});
+            		var infowindow = new google.maps.InfoWindow({
+						content: '<div>' +
+                		'<h5>'+data.jsonArray[index].sname+'</h5>' +
+                		'<p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p>' +
+                		'<p><b>Địa chỉ:</b> '+data.jsonArray[index].saddress+'</p>' +
+                		'<p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p>' +
+                		'<p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p>' +
+                		'<p><b>Website: <a href="http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p>' +
+                		'</div>'
+           			});
             		maker.addListener('click', function () {
-            			var infowindow = new google.maps.InfoWindow({
-									content: '<div>' +
-                            		'<h5>'+data.jsonArray[index].sname+'</h5>' +
-                            		'<p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p>' +
-                            		'<p><b>Địa chỉ:</b> '+data.jsonArray[index].saddress+'</p>' +
-                            		'<p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p>' +
-                            		'<p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p>' +
-                            		'<p><b>Website: <a href="http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p>' +
-                            		'</div>'
-                        });
                         infowindow.open(map, maker);
                     });
+            		var loc = document.getElementById('loc'+index);
+            		loc.onclick = function(){
+            			infowindow.open(map, maker);
+            		};
             	});
         	};
         };
