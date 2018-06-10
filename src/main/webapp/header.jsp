@@ -23,7 +23,7 @@
 			<li class="page1"><a href="<%=request.getContextPath()%>/index.jsp">Trang chủ</a></li>
 			<li class="page2"><a href="<%=request.getContextPath()%>/feature2.jsp">Chức năng 2</a></li>
 			<li class="page3"><a href="<%=request.getContextPath()%>/feature3.jsp">Chức năng 3</a></li>
-			<li class="page4"><a href="#">Chức năng 4</a></li>
+			<li class="page4"><a href="<%=request.getContextPath()%>/feature4.jsp">Chức năng 4</a></li>
 			<li class="page5"><a href="#">Chức năng 5</a></li>
 		</ul>
 	</div>

@@ -10,8 +10,28 @@
   	<description></description>
   	<servlet-class>controller.ImportData</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UniSearchCtr</servlet-name>
+  	<display-name>UniSearchCtr</display-name>
+  	<description></description>
+  	<servlet-class>controller.UniSearchCtr</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SearchBenchMark</servlet-name>
+  	<display-name>SearchBenchMark</display-name>
+  	<description></description>
+  	<servlet-class>controller.SearchBenchMark</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ImportData</servlet-name>
   	<url-pattern>/ImportData</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UniSearchCtr</servlet-name>
+  	<url-pattern>/UniSearchCtr</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SearchBenchMark</servlet-name>
+  	<url-pattern>/SearchBenchMark</url-pattern>
   </servlet-mapping>
 </web-app>
