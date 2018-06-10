@@ -67,9 +67,11 @@
 	<script>
 		
         $(document).ready(function () {
-            
+        	$.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+        		  
+        	});
             $.ajax({
-            	url: "http://www.geoplugin.net/json.gp?ip=171.240.135.62",
+            	url: "http://www.geoplugin.net/json.gp",
             	dataType: "json",
             	type: "get",
             	success: function(position){
