@@ -123,11 +123,13 @@
                 var map = new google.maps.Map(mapDiv, options);
                 var radius = $("#rangevalue").val();
                 var bounds = new google.maps.LatLngBounds();
+                var hasValidUni = false;
                 bounds.extend(new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude));
         		$("#result").removeClass("hide");
         		$("#result").html("");
             	$.each(data.jsonArray, function(index) {
             		if(distanceFrom2Points(window.position.geoplugin_latitude,window.position.geoplugin_longitude,data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){
+            		hasValidUni = true;
             		$("#result").append('<li class=\"list-group-item\"><div class=\"panel-group\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" href=\"#collapse'+index+'\">'+data.jsonArray[index].sname+'</a></h4></div><div id=\"collapse'+index+'\" class=\"panel-collapse collapse\"><div class=\"panel-body\"><p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p><p><b>Địa chỉ:</b> <a id=\"loc'+index+'\" href="#">'+data.jsonArray[index].saddress+'</a></p><p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p><p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p><p><b>Website: <a href=\"http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p></div></div></div></div></li>');
             		var maker = new google.maps.Marker({
                 		position: new google.maps.LatLng(data.jsonArray[index].lat, data.jsonArray[index].lng),
@@ -166,7 +168,9 @@
                     fillOpacity: 0.1,
                     map: map
                   });
-            	
+            	if(!hasValidUni){
+            		alert("Không tìm thấy trường nào.");
+            	}
         	};
         };
        
