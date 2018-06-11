@@ -13,6 +13,7 @@ Ghi chú:
 - Khi tìm kiếm, đánh dấu các điểm (marker) mà map tìm được
 - Đối với chức năng 1, khi bấm vào marker thì hiển thị thông tin về trường
 - Đối với chức năng 5, khi bấm vào marker thì hiển thị thông tin tuyển sinh của ngành mà người dùng nhập
+
 Thực hiện:
 -	Đỗ Nguyên Tú: đăng ký google map api key, thiết kế và xây dựng database, thiết kế web, chức năng 1, lấy tọa độ người dùng
 -	Hồ Sỹ Huy: chức năng 2
