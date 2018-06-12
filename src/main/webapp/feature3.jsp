@@ -54,10 +54,10 @@
 				</div>
 				<h4 class="title">Chọn bán kính muốn xem (km)</h4>
 				<div class="row">
-					<input class="col-sm-3 custom-range" type="range" max="20"
+					<input class="col-sm-3 custom-range" type="range" max="50" min="0"
 						id="slider" value="5" onchange="rangevalue.value=value" /> <input
 						class="col-sm-3" id="rangevalue" value="5"
-						onchange="slider.value=value" type="number" max="20" min="0" />
+						onchange="slider.value=value" type="number" max="50" min="0" />
 				</div>
 				<ul id="result" class="hide list-group"></ul>
 			</div>
@@ -67,10 +67,13 @@
 	<script>
 		
         $(document).ready(function () {
-        	$.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
-        		  
-        	});
-            $.ajax({
+        	if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(locationHandler);
+            } else { 
+                alert("Geolocation is not supported by this browser.");
+            }
+        	
+           /*  $.ajax({
             	url: "http://www.geoplugin.net/json.gp",
             	dataType: "json",
             	type: "get",
@@ -79,16 +82,34 @@
             		var mapDiv = $("#map")[0];
             		var latlng = new google.maps.LatLng(position.geoplugin_latitude, position.geoplugin_longitude);
             		var options = {
-                            center: latlng,
+                            center: window.latlng,
                             zoom: 15,
                             mapTypeId: google.maps.MapTypeId.ROADMAP
                         };
                    var map = new google.maps.Map(mapDiv, options);
             	}
-            });
+            }); */
             
-            
+    		
         });
+        
+        function locationHandler(position) {
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            window.latlng = latlng;
+            var mapDiv = $("#map")[0];
+    		var options = {
+                    center: window.latlng,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+           var map = new google.maps.Map(mapDiv, options);
+           
+           new google.maps.Marker({
+        		position: latlng,
+        		map: map,
+        		title: "Vị trí của bạn"
+    		});
+        }
         
         function handler() {
             var bm = $("#input").val();
@@ -114,21 +135,28 @@
         		alert("Không tìm thấy trường nào.");
         	} else{
         		var mapDiv = $("#map")[0];
-                var latlng = new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude);
+                /* var latlng = new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude); */
                 var options = {
-                    center: latlng,
-                    zoom: 11,
+                    center: window.latlng,
+                    zoom: 15,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 var map = new google.maps.Map(mapDiv, options);
+                new google.maps.Marker({
+            		position: window.latlng,
+            		map: map,
+            		title: "Vị trí của bạn"
+        		});
                 var radius = $("#rangevalue").val();
                 var bounds = new google.maps.LatLngBounds();
                 var hasValidUni = false;
-                bounds.extend(new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude));
+                /* bounds.extend(new google.maps.LatLng(window.position.geoplugin_latitude, window.position.geoplugin_longitude)); */
+                bounds.extend(window.latlng);
         		$("#result").removeClass("hide");
         		$("#result").html("");
             	$.each(data.jsonArray, function(index) {
-            		if(distanceFrom2Points(window.position.geoplugin_latitude,window.position.geoplugin_longitude,data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){
+            		/* if(distanceFrom2Points(window.position.geoplugin_latitude,window.position.geoplugin_longitude,data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){ */
+            		if(distanceFrom2Points(window.latlng.lat(),window.latlng.lng(),data.jsonArray[index].lat,data.jsonArray[index].lng)<=(radius*1000)){
             		hasValidUni = true;
             		$("#result").append('<li class=\"list-group-item\"><div class=\"panel-group\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" href=\"#collapse'+index+'\">'+data.jsonArray[index].sname+'</a></h4></div><div id=\"collapse'+index+'\" class=\"panel-collapse collapse\"><div class=\"panel-body\"><p><b>Mã trường:</b> '+data.jsonArray[index].sid+'</p><p><b>Địa chỉ:</b> <a id=\"loc'+index+'\" href="#">'+data.jsonArray[index].saddress+'</a></p><p><b>Điểm sàn:</b> '+data.jsonArray[index].benchmark+'</p><p><b>Chỉ tiêu tuyển sinh:</b> '+data.jsonArray[index].quota+'</p><p><b>Website: <a href=\"http://'+data.jsonArray[index].website+'\">'+data.jsonArray[index].website+'</a></p></div></div></div></div></li>');
             		var maker = new google.maps.Marker({
