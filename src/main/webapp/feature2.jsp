@@ -13,6 +13,9 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<script>
+		$(".page2").addClass('active');
+	</script>
 	<center>
 		<h1>Các trường đại học trên TP Hồ Chí Minh</h1>
 		<p id="demo"></p>

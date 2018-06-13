@@ -1,3 +1,6 @@
+<%@page import="model.Information"%>
+<%@page import="DAO.SectorDAO"%>
+<%@page import="model.Sector"%>
 <%@page import="DAO.UniversityDAO"%>
 <%@page import="model.University"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Search các trường có chỉ tiêu theo yêu cầu</title>
+<title>Chức năng 5</title>
 <link type="text/css" href="css/style.css" rel="stylesheet" media="all" />
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ZVhmqBT0By8htwjdjn22PIBzFJ1YThc&callback=myMap"></script>
@@ -14,14 +17,14 @@
 <body>
 	<%@include file="header.jsp"%>
 	<script>
-		$(".page4").addClass('active');
+		$(".page5").addClass('active');
 	</script>
 	<center>
 		<h1>Các trường đại học trên TP Hồ Chí Minh</h1>
 		<p id="demo"></p>
 		<ul>
-			<li>bán kính:<input type="text" id="num" name="num"></li> 
-			<li>chỉ tiêu:<input type="text" id="numtag" name="numtag"> </li>
+			<li>Bán kính(m):<input type="text" id="num" name="num"></li> 
+			<li>Tên ngành:<input type="text" id="nganh" name="nganh"> </li>
 		</ul>
 		<input type="button"
 			value="Get" onclick='call()'>
@@ -45,11 +48,11 @@
 		/* Lấy giá trị từ các input */
 		function showPosition2(position) {
 			var numb = document.getElementById("num").value;
-			var numtag = document.getElementById("numtag").value;
-			window.location.replace("feature4.jsp?lat="
+			var nganh = document.getElementById("nganh").value;
+			window.location.replace("feature5.jsp?lat="
 					+ position.coords.latitude + "&lng="
 					+ position.coords.longitude + "&num=" + numb
-					+ "&numtag=" + numtag);
+					+ "&nganh=" + nganh);
 		}
 
 		window.onload = function getLocation() {
@@ -85,12 +88,12 @@
 			String lat = request.getParameter("lat");
 			String lng = request.getParameter("lng");
 			String num = request.getParameter("num");
-			String numtag = request.getParameter("numtag");
-			if (lat != null && lng != null && num != null && numtag != null) {
+			String nganh = request.getParameter("nganh");
+			if (lat != null && lng != null && num != null && nganh != null) {
 			double lo = Double.parseDouble(lng);
 			double la = Double.parseDouble(lat);
 			double radius = Double.parseDouble(num);
-			int quota = Integer.parseInt(numtag);
+			
 		%>
 		var myCity = new google.maps.Circle({
 		    center: latlng,
@@ -102,29 +105,29 @@
 		    fillOpacity: 0.1
 		  });
 		  myCity.setMap(map);
-		<%for (University u : UniversityDAO.getUniversitiesByQuota(quota)) {%>
+		<%int i=0;
+		for (Information s: SectorDAO.getSectors(nganh.toUpperCase())){
+		i++;%>
 		/* So sánh khoảng cách từ tọa độ bản thân đến trường so với bán kính */
-		<% if(UniversityDAO.distanceBetween2Points(la, lo, u.getLat(), u.getLng()) <= radius){ %>
+		<% if(UniversityDAO.distanceBetween2Points(la, lo, s.getLat(), s.getLng()) <= radius){ %>
 		
         
-		var marker<%=u.getId()%> = new google.maps.Marker({
-			position : new google.maps.LatLng(<%=u.getLat()%>, <%=u.getLng()%>),
-			title : '<%=u.getSname()%>'
+		var marker<%=i%> = new google.maps.Marker({
+			position : new google.maps.LatLng(<%=s.getLat()%>, <%=s.getLng()%>),
+			title : '<%=s.getSname()%>'
 		});
-		marker<%=u.getId()%>.setMap(map);
-		google.maps.event.addListener(marker<%=u.getId()%>, 'click', function() {
+		marker<%=i%>.setMap(map);
+		google.maps.event.addListener(marker<%=i%>, 'click', function() {
 			var infowindow = new google.maps.InfoWindow({
 				content : '<div id="info">' +
-				'<h5><%=u.getSname()%></h5>' +
-				'<p><b>Mã trường:</b> <%=u.getSid()%></p>' +
-				'<p><b>Địa chỉ:</b> <%=u.getSaddress()%></p>' +
-				'<p><b>Điểm sàn:</b> <%=u.getBenchmark()%></p>' +
-				'<p><b>Chỉ tiêu tuyển sinh:</b> <%=u.getQuota()%></p>' +
-				'<p><b>Website: <a href="http://www.<%=u.getWebsite()%>"><%=u.getWebsite()%></a></p>' +
+				'<h5><%=s.getSectorName()%></h5>' +
+				'<p><b>Điểm tuyển:</b> <%=s.getSectorPoint()%></p>' +
+				'<p><b>Chỉ tiêu tuyển sinh:</b> <%=s.getSectorQuota()%></p>' +
+				'<p><b>Trường:</b> <%=s.getSname()%></p>' +
 				'</div>'
 			});
 			
-			infowindow.open(map, marker<%=u.getId()%>);
+			infowindow.open(map, marker<%=i%>);
 		});
 		<%}%>
 		

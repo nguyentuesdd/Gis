@@ -15,6 +15,9 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<script>
+		$(".page1").addClass('active');
+	</script>
 	<center>
 		<h1>Các trường đại học trên TP Hồ Chí Minh</h1>
 		<div id="map"></div>

@@ -76,7 +76,7 @@ public class ImportSector extends HttpServlet {
 			int sectorQuota = (int) cellIterator.next().getNumericCellValue();
 			double sectorPoint = cellIterator.next().getNumericCellValue();
 
-			SectorDAO.add_sector(sectorid, sid, sectorName, sectorQuota, sectorPoint);
+			SectorDAO.add_sector(sectorid, sid, sectorName.toUpperCase(), sectorQuota, sectorPoint);
 		}
 		workbook.close();
 		String link = request.getContextPath() + "/index.jsp";

@@ -42,6 +42,9 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<script>
+		$(".page3").addClass('active');
+	</script>
 	<center>
 		<h1>Tìm kiếm các trường đại học theo điểm chuẩn</h1>
 		<div class="col-9 row">
