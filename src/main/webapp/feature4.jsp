@@ -39,6 +39,7 @@
 			}
 		}
 
+		/* Lấy giá trị từ các input */
 		function showPosition2(position) {
 			var numb = document.getElementById("num").value;
 			var numtag = document.getElementById("numtag").value;
@@ -59,6 +60,7 @@
 
 		function showPosition(position) {
 			var mapDiv = document.getElementById('map');
+			/* Lấy ra tọa độ của bản thân */
 			var latlng = new google.maps.LatLng(position.coords.latitude,
 					position.coords.longitude);
 
@@ -98,7 +100,7 @@
 		  });
 		  myCity.setMap(map);
 		<%for (University u : UniversityDAO.getUniversitiesByQuota(quota)) {%>
-		
+		/* So sánh khoảng cách từ tọa độ bản thân đến trường so với bán kính */
 		<% if(UniversityDAO.distanceBetween2Points(la, lo, u.getLat(), u.getLng()) <= radius){ %>
 		
         
