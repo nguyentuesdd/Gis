@@ -41,7 +41,7 @@ public class SearchBenchMark extends HttpServlet {
 		JSONArray uniArray = new JSONArray();
 		JSONObject uni;
 		JSONObject returnJson = new JSONObject();
-		ArrayList<University> uniList = (ArrayList<University>) UniversityDAO.getUniversitiesByBenchMark(0, 0, radius,bm);
+		/*ArrayList<University> uniList = (ArrayList<University>) UniversityDAO.getUniversitiesByBenchMark(0, 0, radius,bm);
 
 		for (University university : uniList) {
 			try {
@@ -66,7 +66,7 @@ public class SearchBenchMark extends HttpServlet {
 		}
 		PrintWriter pw = response.getWriter();
 		pw.print(returnJson.toString());
-		pw.close();
+		pw.close();*/
 	}
 
 	/**

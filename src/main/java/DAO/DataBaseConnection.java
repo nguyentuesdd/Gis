@@ -6,9 +6,13 @@ import java.sql.DriverManager;
 public class DataBaseConnection {
 	public static Connection getConnection() {
 		Connection connection = null;
-		String driver = "org.postgresql.Driver";
+		/*String driver = "org.postgresql.Driver";
 		String url = "jdbc:postgresql://localhost:5432/finaltest";
 		String user = "postgres";
+		String pass = "123456";*/
+		String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=finaltest";
+		String user = "sa";
 		String pass = "123456";
 		try {
 			Class.forName(driver);

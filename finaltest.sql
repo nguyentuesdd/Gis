@@ -30,7 +30,7 @@ create table universitys
 drop table if exists sectors;
 create table sectors
 (
-  idsector char(15),
+  idsector int,
   sid char(3)  references universitys(sid),
   namesector character varying(255),
   quotasector int,
@@ -87,3 +87,4 @@ create or replace function st_search_univercities_with_quota(stlng double precis
 
 
 -- Insert các ngành, nhóm ngành vào bảng sector, Lưu ý: phải insert sau khi bảng universitys đã có dữ liệu
+-- select * from sectors;
