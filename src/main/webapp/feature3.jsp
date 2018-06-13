@@ -192,10 +192,10 @@
             	var circle = new google.maps.Circle({
                     center: latlng,
                     radius: radius*1000,
-                    strokeColor: "#0000FF",
+                    strokeColor: "#007fff",
                     strokeOpacity: 0.1,
                     strokeWeight: 1,
-                    fillColor: "#0000FF",
+                    fillColor: "#007fff",
                     fillOpacity: 0.1,
                     map: map
                   });

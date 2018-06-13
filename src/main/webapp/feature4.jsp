@@ -72,7 +72,7 @@
 			var map = new google.maps.Map(mapDiv, options);
 			var marker = new google.maps.Marker({
 				position : latlng,
-				icon: "orange-circle.png",
+				icon: "img/mylocation.png",
 				title : "Bạn ở đây!"
 			});
 			marker.setMap(map);
@@ -92,10 +92,10 @@
 		var myCity = new google.maps.Circle({
 		    center: latlng,
 		    radius: <%=radius%>,
-		    strokeColor: "#0000FF",
-		    strokeOpacity: 0.8,
+		    strokeColor: "#007fff",
+		    strokeOpacity: 0.1,
 		    strokeWeight: 2,
-		    fillColor: "#0000FF",
+		    fillColor: "#007fff",
 		    fillOpacity: 0.1
 		  });
 		  myCity.setMap(map);
