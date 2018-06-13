@@ -17,7 +17,7 @@
 	<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">GIS</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/importdata.jsp">GIS</a>
 		</div>
 		<ul class="nav navbar-nav">
 			<li class="page1"><a href="<%=request.getContextPath()%>/index.jsp">Trang chủ</a></li>
