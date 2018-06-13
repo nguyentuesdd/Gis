@@ -107,7 +107,8 @@
            new google.maps.Marker({
         		position: latlng,
         		map: map,
-        		title: "Vị trí của bạn"
+        		title: "Vị trí của bạn",
+        		icon: "img/mylocation.png"
     		});
         }
         
@@ -123,13 +124,14 @@
             	   type: "post", 
             	   dataType: "json",
             	   success: responseHandler, 
-            	   data: {"bm": bm, "radius":radius}
+            	   data: {"bm": bm}
                });
             }
             }else{
           		alert("Chỉ có thể nhập số.")
           	};
         };
+        
         function responseHandler(data){
         	if(jQuery.isEmptyObject(data.jsonArray)){
         		alert("Không tìm thấy trường nào.");
@@ -145,7 +147,8 @@
                 new google.maps.Marker({
             		position: window.latlng,
             		map: map,
-            		title: "Vị trí của bạn"
+            		title: "Vị trí của bạn",
+            		icon: "img/mylocation.png"
         		});
                 var radius = $("#rangevalue").val();
                 var bounds = new google.maps.LatLngBounds();

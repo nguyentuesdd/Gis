@@ -37,11 +37,10 @@ public class SearchBenchMark extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=utf-8");
 		double bm = Double.parseDouble(request.getParameter("bm"));
-		double radius = Double.parseDouble(request.getParameter("radius"));
 		JSONArray uniArray = new JSONArray();
 		JSONObject uni;
 		JSONObject returnJson = new JSONObject();
-		/*ArrayList<University> uniList = (ArrayList<University>) UniversityDAO.getUniversitiesByBenchMark(0, 0, radius,bm);
+		ArrayList<University> uniList = (ArrayList<University>) UniversityDAO.getUniversitiesByBenchMark(bm);
 
 		for (University university : uniList) {
 			try {
@@ -66,7 +65,7 @@ public class SearchBenchMark extends HttpServlet {
 		}
 		PrintWriter pw = response.getWriter();
 		pw.print(returnJson.toString());
-		pw.close();*/
+		pw.close();
 	}
 
 	/**

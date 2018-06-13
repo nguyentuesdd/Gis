@@ -65,25 +65,33 @@ public class UniversityDAO {
 		}
 	}
 
-	/*
-	 * public static List<University> getUniversitiesByBenchMark(double ulat,
-	 * double ulng, double radius, double bm) { List<University> list = new
-	 * ArrayList<University>(); try { Connection conn =
-	 * DataBaseConnection.getConnection(); String sql =
-	 * "select * from universitys where (st_intersects(geom, ST_Buffer(ST_SetSRID(st_point(?, ?), 4326), ?)) = true) and (benchmark <= ?);"
-	 * ; PreparedStatement pr = conn.prepareStatement(sql); pr.setDouble(1,
-	 * 106.697845); pr.setDouble(2, 10.771971); pr.setDouble(3, radius);
-	 * pr.setDouble(4, bm); ResultSet rs = pr.executeQuery(); while (rs.next())
-	 * { int id = rs.getInt("id"); String sid = rs.getString("sid"); String
-	 * sname = rs.getString("sname"); String saddress =
-	 * rs.getString("saddress"); double benchmark = rs.getDouble("benchmark");
-	 * int quota = rs.getInt("quota"); String website = rs.getString("website");
-	 * double lng = rs.getDouble("lng"); double lat = rs.getDouble("lat");
-	 * list.add(new University(id, sid, sname, saddress, benchmark, quota,
-	 * website, lng, lat)); } return list; } catch (Exception e) { System.out.
-	 * println("Loi ham getUniversitiesByBenchMark tai DAO.UniversityDAO");
-	 * e.printStackTrace(); return list; } }
-	 */
+	public static List<University> getUniversitiesByBenchMark(double bm) {
+		List<University> list = new ArrayList<University>();
+		try {
+			Connection conn = DataBaseConnection.getConnectionAzure();
+			String sql = "select * from universitys where benchmark <= ?;";
+			PreparedStatement pr = conn.prepareStatement(sql);
+			
+			pr.setDouble(1, bm);
+			ResultSet rs = pr.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String sid = rs.getString("sid");
+				String sname = rs.getString("sname");
+				String saddress = rs.getString("saddress");
+				double benchmark = rs.getDouble("benchmark");
+				int quota = rs.getInt("quota");
+				String website = rs.getString("website");
+				double lng = rs.getDouble("lng");
+				double lat = rs.getDouble("lat");
+				list.add(new University(id, sid, sname, saddress, benchmark, quota, website, lng, lat));
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return list;
+		}
+	}
 
 	public static List<University> getUniversitiesByQuota(int quotaIn) {
 		List<University> list = new ArrayList<University>();
