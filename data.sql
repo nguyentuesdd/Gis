@@ -42,16 +42,16 @@ create table sectors
 ALTER TABLE sectors
 ADD CONSTRAINT sectors_universitys FOREIGN KEY (sid) REFERENCES universitys (sid)
 go
--- select * from universitys;
+-- select * from universitys order by sid;
 
--- Procedure có chức năng tìm ra các trường nằm trong bán kính bao nhiêu m (Dành cho câu 2)
+-- (Dành cho câu 2)
 -- lng và lat là tọa độ tâm (tọa độ của người dùng hoặc tọa độ của địa chỉ người dùng nhập)
 -- radius là bán kính người dùng nhập
 
 -- select * from universitys where st_intersects(geom, ST_Buffer(ST_SetSRID(st_point(stlng, stlat), 4326), radius)) = true;
 go
 
--- Procedure có chức năng tìm ra các trường nằm trong bán kính bao nhiêu m với điểm sàn(Dành cho câu 3)
+-- (Dành cho câu 3)
 -- lng và lat là tọa độ tâm (tọa độ của người dùng hoặc tọa độ của địa chỉ người dùng nhập)
 -- radius là bán kính người dùng nhập
 -- point là điểm người dùng nhập
@@ -59,7 +59,7 @@ go
 -- select * from universitys where (st_intersects(geom, ST_Buffer(ST_SetSRID(st_point(stlng, stlat), 4326), radius)) = true) and (benchmark <= point);
 go
 
--- Procedure có chức năng tìm ra các trường nằm trong bán kính bao nhiêu m với chỉ tiêu(Dành cho câu 4)
+-- (Dành cho câu 4)
 -- lng và lat là tọa độ tâm (tọa độ của người dùng hoặc tọa độ của địa chỉ người dùng nhập)
 -- radius là bán kính người dùng nhập
 -- num là chỉ tiêu người dùng nhập

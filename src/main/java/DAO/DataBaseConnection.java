@@ -22,9 +22,23 @@ public class DataBaseConnection {
 		}
 		return connection;
 	}
+	public static Connection getConnectionAzure() {
+		Connection connection = null;
+		String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		String url = "jdbc:sqlserver://projectmid.database.windows.net:1433;database=NotiApp";
+		String user = "nguyentu@projectmid";
+		String pass = "Microsoft24";
+		try {
+			Class.forName(driver);
+			connection = DriverManager.getConnection(url, user, pass);
+		} catch (Exception e) {
+			System.err.println("DAO: " + e);
+		}
+		return connection;
+	}
 
 	public static void main(String[] args) {
-		Connection connection = DataBaseConnection.getConnection();
+		Connection connection = DataBaseConnection.getConnectionAzure();
 		if (connection != null) {
 			System.out.println("Kết nối database thành công");
 		} else {
