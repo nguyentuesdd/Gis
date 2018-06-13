@@ -85,8 +85,8 @@
 		    strokeColor: "#0000FF",
 		    strokeOpacity: 0.8,
 		    strokeWeight: 2,
-		    fillColor: "white",
-		    fillOpacity: 0
+		    fillColor: "#0000FF",
+		    fillOpacity: 0.1
 		  });
 		  myCity.setMap(map);
 		<%for (University u : UniversityDAO.getAllUniversities()) {%>

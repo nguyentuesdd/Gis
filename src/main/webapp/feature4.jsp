@@ -16,8 +16,10 @@
 	<center>
 		<h1>Các trường đại học trên TP Hồ Chí Minh</h1>
 		<p id="demo"></p>
-		<li>bán kính:<input type="text" id="num" name="num"></li> 
-		<li>chỉ tiêu:<input type="text" id="numtag" name="numtag"> </li>
+		<ul>
+			<li>bán kính:<input type="text" id="num" name="num"></li> 
+			<li>chỉ tiêu:<input type="text" id="numtag" name="numtag"> </li>
+		</ul>
 		<input type="button"
 			value="Get" onclick='call()'>
 		<div id="map"></div>
@@ -39,9 +41,11 @@
 
 		function showPosition2(position) {
 			var numb = document.getElementById("num").value;
+			var numtag = document.getElementById("numtag").value;
 			window.location.replace("feature4.jsp?lat="
 					+ position.coords.latitude + "&lng="
-					+ position.coords.longitude + "&num=" + numb);
+					+ position.coords.longitude + "&num=" + numb
+					+ "&numtag=" + numtag);
 		}
 
 		window.onload = function getLocation() {
@@ -54,10 +58,10 @@
 		}
 
 		function showPosition(position) {
-			var mapDiv = document.getElementById('map').value;
+			var mapDiv = document.getElementById('map');
 			var latlng = new google.maps.LatLng(position.coords.latitude,
 					position.coords.longitude);
-			var numtag= document.getElementById('numtag');
+
 			var options = {
 				center : latlng,
 				zoom : 8,
@@ -76,12 +80,12 @@
 			String lat = request.getParameter("lat");
 			String lng = request.getParameter("lng");
 			String num = request.getParameter("num");
-			String numtag= request.getParameter("numtag");
-			if (lat != null && lng != null && num != null) {
+			String numtag = request.getParameter("numtag");
+			if (lat != null && lng != null && num != null && numtag != null) {
 			double lo = Double.parseDouble(lng);
 			double la = Double.parseDouble(lat);
 			double radius = Double.parseDouble(num);
-			int numquota = Integer.parseInt(numtag);
+			int quota = Integer.parseInt(numtag);
 		%>
 		var myCity = new google.maps.Circle({
 		    center: latlng,
@@ -89,11 +93,11 @@
 		    strokeColor: "#0000FF",
 		    strokeOpacity: 0.8,
 		    strokeWeight: 2,
-		    fillColor: "white",
-		    fillOpacity: 0
+		    fillColor: "#0000FF",
+		    fillOpacity: 0.1
 		  });
 		  myCity.setMap(map);
-		<%for (University u : UniversityDAO.getUniversitiesByQuota(numquota)) {%>
+		<%for (University u : UniversityDAO.getUniversitiesByQuota(quota)) {%>
 		
 		<% if(UniversityDAO.distanceBetween2Points(la, lo, u.getLat(), u.getLng()) <= radius){ %>
 		

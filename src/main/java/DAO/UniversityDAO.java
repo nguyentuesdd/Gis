@@ -105,6 +105,7 @@ public class UniversityDAO {
 				double lat = rs.getDouble("lat");
 				list.add(new University(id, sid, sname, saddress, benchmark, quota, website, lng, lat));
 			}
+			conn.close();
 			return list;
 		} catch (Exception e) {
 			System.out.println("Loi ham getUniversitiesByQuota tai DAO.UniversityDAO");
